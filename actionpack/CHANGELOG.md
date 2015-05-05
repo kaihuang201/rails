@@ -1,3 +1,9 @@
+*   Added log_before_action function. Users can use log_before_action function
+    instead of before_action in controllers to get info level logging every time
+    the user defined before_action callback is invoked.
+
+    *Kai Huang*
+
 *   Migrating to keyword arguments syntax in `ActionController::TestCase` and
     `ActionDispatch::Integration` HTTP request methods.
 

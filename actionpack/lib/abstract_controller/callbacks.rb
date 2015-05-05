@@ -224,6 +224,22 @@ module AbstractController
           send("append_#{callback}_action", *names, &blk)
         end
       end
+
+      define_method "log_before_action" do |*names, &blk|
+        _insert_callbacks(names, blk) do |name, options|
+          callback_with_log = -> () {
+            if name.is_a? ::Proc
+              logger.info "    User defined before_action callback #{name} invoked."
+              name.call
+            elsif name.is_a? Symbol
+              logger.info "    User defined before_action callback #{method(name)} invoked."
+              send name
+            end
+          }
+          set_callback(:process_action, :before, callback_with_log, options)
+        end
+      end
+
     end
   end
 end
